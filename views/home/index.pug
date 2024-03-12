@@ -6,7 +6,7 @@ body
           h1 List
         .col-md-6.text-end
           a.btn.btn-success(href='/add', role='button') Add      
-      table.table.table-responsive.table-hover.table-striped.table-dark
+      table.table.table-responsive.table-hover.table-bordered.table-dark
         thead
           tr
             th(scope="col") ID
@@ -33,8 +33,8 @@ script.
           <td>${event.volunteersNumber}</td>
           <td>${event.opportunities}</td>
           <td>
-            <button class="btn btn-primary btn-sm" data-id="${e.id}" onclick="window.location.href='/update/${e.id}'">Update</button>
-            <button class="btn btn-danger btn-sm" data-id="${e.id}">Delete</button>
+            <button class="btn btn-info btn-sm" data-id="${e.id}" onclick="window.location.href='/update/${e.id}'">Update</button>
+            <button class="btn btn-warning btn-sm" data-id="${e.id}">Delete</button>
           </td>
         `;
         tableBody.appendChild(row);
