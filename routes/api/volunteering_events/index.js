@@ -1,13 +1,13 @@
 const express = require('express');
 const { validationResult } = require('express-validator');
-const { addEventValidation, deleteEventValidation } = require('../../../validators/event');
+const { addEventValidation, deleteEventValidation,updateEventsValidation } = require('../../../validators/event');
 
 const router = express.Router();
-const controller = require('../../../controllers/api/events');
+const event_controller = require('../../../controllers/api/events');
 
 // Define API routes
 router.get('/', (req, res)=>{
-    controller.getAll(req, res);
+    event_controller.getAll(req, res);
 });
 
 router.post('/', addEventValidation(), (req, res)=>{
@@ -16,7 +16,7 @@ router.post('/', addEventValidation(), (req, res)=>{
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    controller.create(req, res)
+    event_controller.create(req, res)
 })
 
 router.delete('/:id', deleteEventValidation(), (req, res, next)=>{
@@ -25,7 +25,17 @@ router.delete('/:id', deleteEventValidation(), (req, res, next)=>{
     return res.status(400).json({ errors: errors.array() });
   }
 
-  controller.delete(req, res)
+  event_controller.delete(req, res)
 })
+router.put('/:id', updateEventsValidation(), (req, res)=>{
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  event_controller.update(req, res)
+})
+
+
 
 module.exports = router;

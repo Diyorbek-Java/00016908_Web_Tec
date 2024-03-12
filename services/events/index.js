@@ -7,6 +7,9 @@ const event_service = {
     getAll() {
         return events;
     },
+    getById(id) {
+        return events.find(t => t.id == id)
+    },    
     create(req, res) {
         let new_id = genRandId(4)
                 
@@ -23,15 +26,30 @@ const event_service = {
         
         return new_event
     },
+    update(id, updateData){
+        const eventIndex = events.findIndex(t => t.id == id)
+
+        if (eventIndex === -1) {
+            return null
+        }
+
+        events[eventIndex].event = { ...events[eventIndex].event, ...updateData }
+        writeToFile(events)
+
+        return events[eventIndex]
+    },
+
+
+    
+
     delete(id) {
         const index = events.findIndex(u => u.id == id)
-        tickets.splice(index, 1)    
-        writeToFile(tickets)
+        events.splice(index, 1)
+        writeToFile(events)
     }
 
 }
 
-// create function for overwriting the db file updated db content
 let writeToFile = async (users) => {
     await 
         fs.writeFileSync(
@@ -42,6 +60,8 @@ let writeToFile = async (users) => {
             'utf8'
         )
 }
+
+
 
 // generate random id inspired by uuid
 let genRandId = (count) =>{

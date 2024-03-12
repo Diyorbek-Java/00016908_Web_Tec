@@ -10,11 +10,22 @@ const event_controller = {
             events_service.create(req, res)
         )
     },
-    delete(req, res) {
-        const event = events_service.getById(req.params.id)
+
+    update(req, res) {
+        const event = events_service.update(req.params.id, req.body)
         
         if (event) {
-            event_service.delete(req.params.id)
+            res.json(event)
+        } else {
+            res.status(404).send('Event not found')
+        }
+    },
+
+    delete(req, res) {
+        const event = events_service.getById(req.params.id)
+
+        if (event) {
+            events_service.delete(req.params.id)
             res.status(204).send('Event deleted successfully')
         } else {
             res.status(404).send('Event not found')

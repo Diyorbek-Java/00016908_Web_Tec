@@ -1,7 +1,11 @@
 include ../head.pug
 body
     .container.mt-5
-      h1 List
+      .row.d-flex.align-items-center
+        .col-md-6
+          h1 List
+        .col-md-6.text-end
+          a.btn.btn-success(href='/add', role='button') Add      
       table.table.table-responsive.table-hover.table-striped.table-dark
         thead
           tr
@@ -9,49 +13,50 @@ body
             th(scope="col") Event Name
             th(scope="col") Event DateTime
             th(scope="col") Event Place
-            th(scope="col") Volunteers Number
-            th(scope="col") Opportunities            
+            th(scope="col") Number of Volunteers
+            th(scope="col") Opportunitioes
             th(scope="col") Actions
         tbody
 script.
-      document.addEventListener('DOMContentLoaded', function() {
-        axios.get('/api/events')
-          .then(function(response) {
-            const events = response.data;
-            const tableBody = document.querySelector('table tbody');
-            events.forEach(e => {
-              const row = document.createElement('tr');
-              const event = e.event
-              row.innerHTML = `
-                <td>${e.id}</td>
-                <td>${event.eventName}</td>
-                <td>${event.eventDateTime}</td>
-                <td>${event.eventPlace}</td>
-                <td>${event.volunteersNumber}</td>
-                <td>${event.opportunities}</td>
-                <td>
-                  <button class="btn btn-primary btn-sm">Edit</button>
-                  <button class="btn btn-danger btn-sm" data-id="${e.id}">Delete</button>
-                </td>
-              `;
-              tableBody.appendChild(row);
-            });
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-
-          // Use event delegation for delete buttons
-          document.addEventListener('click', function(event) {
-            if (event.target && event.target.classList.contains('btn-danger')) {
-              const eventId = event.target.getAttribute('data-id');
-              axios.delete(`/api/events/${eventId}`).then(function(response) {
-                console.log('Delete successful', response);
-                location.href = '/'
-              })
-              .catch(function(error) {
-                console.log('Error deleting event', error);
-              });
-            }
-          });
+  document.addEventListener('DOMContentLoaded', function() {
+    axios.get('/api/volunteering_events').then(function(response) {
+      const events = response.data;
+      const tableBody = document.querySelector('table tbody');
+      events.forEach(e => {
+        const row = document.createElement('tr');
+        const event = e.event
+        row.innerHTML = `
+          <td>${e.id}</td>
+          <td>${event.eventName}</td>
+          <td>${event.eventDateTime}</td>
+          <td>${event.eventPlace}</td>
+          <td>${event.volunteersNumber}</td>
+          <td>${event.opportunities}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" data-id="${e.id}" onclick="window.location.href='/update/${e.id}'">Update</button>
+            <button class="btn btn-danger btn-sm" data-id="${e.id}">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
       });
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+    // Use event delegation for delete buttons
+    document.addEventListener('click', function(event) {
+      if (event.target && event.target.classList.contains('btn-danger')) {
+        const eventID = event.target.getAttribute('data-id');
+        axios.delete(`/api/volunteering_events/${eventID}`).then(function(response) {
+          alert('Deleted successfully', response);
+          location.href = '/'
+        })
+        .catch(function(error) {
+          alert('Error deleting event: ' + error);
+        });
+      }
+    });
+    
+  });
+
