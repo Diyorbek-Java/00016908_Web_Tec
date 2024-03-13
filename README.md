@@ -14,7 +14,7 @@ filled with data which Addimistration wants to uodate. For add simply the new pa
 For validation there is not that mich requrements event name must contains at least 8 char and Oppottunites also should filled at leas with having sertificate
 then the Volunteers should be at least 1 
 
-
+This project is uploaded git repository https://github.com/Diyorbek-Java/00016908_Web_Tec
  
 
 
