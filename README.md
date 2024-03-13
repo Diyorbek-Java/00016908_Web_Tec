@@ -9,7 +9,7 @@ During the development of the Project BootStrap is used from backgeound table, T
 
 Further Informations, With entering Website addministration firts see the Events table and There is no enrole button but just add, update, delete buttons
 Then thery can create new events for volunteers For update and Add buttons the same pug files are used in the servise Code the Rows automaticly
-filled with data which Addimistration wants to uodate. For add simply the new page opens with empty rows.
+filled with data which Addimistration wants to uodate. For add simply the new page opens with empty rows. And Application Is not Deployed in any palatform
 
 For validation there is not that mich requrements event name must contains at least 8 char and Oppottunites also should filled at leas with having sertificate
 then the Volunteers should be at least 1 
